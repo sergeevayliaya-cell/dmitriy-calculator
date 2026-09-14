@@ -3,394 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор семейной ипотеки 6% | Дмитрий Ермаков</title>
+    <title>Калькулятор семейной ипотеки 6%</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
         .container {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-            max-width: 800px;
-            width: 100%;
             padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 100%;
         }
-
-        h1 {
-            font-size: 28px;
-            color: #1a1a1a;
-            margin-bottom: 12px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-            margin-bottom: 32px;
-            line-height: 1.5;
-        }
-
-        .input-group {
-            margin-bottom: 32px;
-        }
-
-        .label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .value-display {
-            font-size: 16px;
-            font-weight: 700;
-            color: #d4a574;
-        }
-
-        .range-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        h1 { font-size: 28px; margin-bottom: 20px; text-align: center; color: #333; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        .input-group { margin-bottom: 30px; }
+        .label { font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; color: #333; }
+        .value-display { color: #d4a574; font-weight: 700; }
         input[type="range"] {
-            flex: 1;
+            width: 100%;
             height: 6px;
-            border-radius: 3px;
-            background: linear-gradient(to right, #d4a574, #d4a574);
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #d4a574;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
-            transition: all 0.2s;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            width: 24px;
-            height: 24px;
-            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #d4a574;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
-            transition: all 0.2s;
-        }
-
-        input[type="range"]::-moz-range-thumb:hover {
-            width: 24px;
-            height: 24px;
-            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
-        }
-
-        .min-max {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #999;
-            margin-top: 6px;
-        }
-
-        .results-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin: 40px 0;
-        }
-
-        .result-card {
-            background: #f9f9f9;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #eee;
-            transition: all 0.3s;
-        }
-
-        .result-card:hover {
-            border-color: #d4a574;
-            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.1);
-        }
-
-        .result-card.family {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.05) 0%, rgba(212, 165, 116, 0.02) 100%);
-        }
-
-        .result-label {
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        .rate {
-            font-size: 18px;
-            color: #d4a574;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .payment {
-            font-size: 28px;
-            color: #1a1a1a;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-
-        .payment-suffix {
-            font-size: 14px;
-            color: #999;
-            margin-left: 4px;
-        }
-
-        .down-payment {
-            font-size: 12px;
-            color: #666;
-            padding-top: 12px;
-            border-top: 1px solid rgba(212, 165, 116, 0.2);
-        }
-
-        .economy-section {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
-            border-radius: 12px;
-            padding: 24px;
-            margin: 32px 0;
-            border-left: 4px solid #d4a574;
-        }
-
-        .economy-label {
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        .economy-value {
-            font-size: 32px;
-            color: #d4a574;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .economy-total {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            cursor: pointer;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
             cursor: pointer;
             accent-color: #d4a574;
         }
-
-        .checkbox-group label {
-            cursor: pointer;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .disclaimer {
-            font-size: 12px;
-            color: #999;
-            line-height: 1.6;
-            margin-top: 32px;
-            padding: 16px;
+        .min-max { display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-top: 5px; }
+        .results { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0; }
+        .card {
             background: #f9f9f9;
-            border-radius: 8px;
-            border-left: 3px solid #d4a574;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eee;
         }
-
-        .cta {
-            background: white;
-            border: 2px solid #d4a574;
-            color: #d4a574;
-            padding: 16px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            text-align: center;
-            margin-top: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: block;
-            width: 100%;
+        .card.highlight { background: linear-gradient(135deg, rgba(212,165,116,0.05), rgba(212,165,116,0.02)); }
+        .card-label { font-size: 12px; color: #999; margin-bottom: 10px; text-transform: uppercase; }
+        .card-rate { font-size: 16px; color: #d4a574; font-weight: 700; margin-bottom: 10px; }
+        .card-payment { font-size: 28px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px; }
+        .card-payment-suffix { font-size: 14px; color: #999; }
+        .card-down { font-size: 12px; color: #666; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
+        .economy {
+            background: linear-gradient(135deg, rgba(212,165,116,0.1), rgba(212,165,116,0.05));
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+            border-left: 4px solid #d4a574;
         }
-
-        .cta:hover {
-            background: #d4a574;
-            color: white;
-        }
-
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #999;
-            margin-top: 24px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 24px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-            .results-section {
-                grid-template-columns: 1fr;
-            }
-
-            .payment {
-                font-size: 24px;
-            }
-
-            .economy-value {
-                font-size: 24px;
-            }
-        }
+        .economy-label { font-size: 12px; color: #999; margin-bottom: 10px; text-transform: uppercase; }
+        .economy-value { font-size: 32px; color: #d4a574; font-weight: 700; margin-bottom: 10px; }
+        .economy-total { font-size: 14px; color: #666; }
+        .disclaimer { font-size: 12px; color: #999; margin-top: 30px; padding: 15px; background: #f9f9f9; border-radius: 8px; line-height: 1.6; }
+        .footer { text-align: center; font-size: 12px; color: #999; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Калькулятор ипотеки</h1>
-        <div class="subtitle">
-            Сколько вы сэкономите на семейной ипотеке<br>
-            <strong>Введите параметры дома — платёж и экономия посчитаются автоматически. Программа семейной ипотеки (ставка 6%) действует до 2027 года.</strong>
-        </div>
+        <p class="subtitle">Сколько вы сэкономите на семейной ипотеке. Введите параметры — платёж посчитается автоматически</p>
 
         <div class="input-group">
             <div class="label">
                 <span>Стоимость дома</span>
                 <span class="value-display"><span id="costDisplay">12</span> млн₽</span>
             </div>
-            <div class="range-container">
-                <input type="range" id="costRange" min="1000000" max="20000000" step="100000" value="12000000">
-            </div>
-            <div class="min-max">
-                <span>1 млн</span>
-                <span>20 млн</span>
-            </div>
+            <input type="range" id="cost" min="1000000" max="20000000" step="100000" value="12000000">
+            <div class="min-max"><span>1 млн</span><span>20 млн</span></div>
         </div>
 
         <div class="input-group">
             <div class="label">
                 <span>Срок кредита</span>
-                <span class="value-display"><span id="termDisplay">30</span>лет</span>
+                <span class="value-display"><span id="termDisplay">30</span> лет</span>
             </div>
-            <div class="range-container">
-                <input type="range" id="termRange" min="5" max="30" step="1" value="30">
+            <input type="range" id="term" min="5" max="30" step="1" value="30">
+            <div class="min-max"><span>5 лет</span><span>30 лет</span></div>
+        </div>
+
+        <div class="results">
+            <div class="card highlight">
+                <div class="card-label">Семейная 6%</div>
+                <div class="card-rate">6% годовых</div>
+                <div class="card-payment"><span id="familyPayment">0</span><span class="card-payment-suffix">₽/мес</span></div>
+                <div class="card-down">Взнос — 0%</div>
             </div>
-            <div class="min-max">
-                <span>5 лет</span>
-                <span>30 лет</span>
+            <div class="card">
+                <div class="card-label">Стандартная ~10,5%</div>
+                <div class="card-rate">10,5% годовых</div>
+                <div class="card-payment"><span id="standardPayment">0</span><span class="card-payment-suffix">₽/мес</span></div>
+                <div class="card-down">Взнос — 20%</div>
             </div>
         </div>
 
-        <div class="checkbox-group">
-            <input type="checkbox" id="customDownPayment">
-            <label for="customDownPayment">▸ Свой первоначальный взнос</label>
-        </div>
-
-        <div class="input-group" id="downPaymentGroup" style="display: none;">
-            <div class="label">
-                <span>Взнос — семейная ипотека</span>
-                <span class="value-display"><span id="dpDisplay">0</span>%</span>
-            </div>
-            <div class="range-container">
-                <input type="range" id="dpRange" min="0" max="50" step="1" value="0">
-            </div>
-            <div class="min-max">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
-        <div style="margin-top: 32px; margin-bottom: 32px;">
-            <div style="font-size: 13px; font-weight: 600; color: #999; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Взнос — стандартная ипотека</div>
-            <div style="font-size: 18px; color: #d4a574; font-weight: 700;">20%</div>
-        </div>
-
-        <div class="results-section">
-            <div class="result-card family">
-                <div class="result-label">Семейная 6%</div>
-                <div class="payment">
-                    <span id="familyPayment">—</span><span class="payment-suffix">₽/мес</span>
-                </div>
-                <div class="down-payment">
-                    Взнос — <span id="familyDownPayment">0</span>%
-                </div>
-            </div>
-            <div class="result-card">
-                <div class="result-label">Стандартная ~10,5%</div>
-                <div class="payment">
-                    <span id="standardPayment">—</span><span class="payment-suffix">₽/мес</span>
-                </div>
-                <div class="down-payment">
-                    Взнос — 20%
-                </div>
-            </div>
-        </div>
-
-        <div class="economy-section">
+        <div class="economy">
             <div class="economy-label">Экономия по семейной программе</div>
-            <div class="economy-value" id="monthlyEconomy">—</div>
-            <div class="economy-total">
-                ≈ <strong id="totalEconomy">—</strong> за весь срок кредита
-            </div>
-        </div>
-
-        <div class="cta">
-            Напишите кодовое слово «<strong>ДОМ</strong>» — пришлю точный расчёт под вашу ситуацию и отвечу на все вопросы 📩
+            <div class="economy-value"><span id="economy">0</span> ₽/мес</div>
+            <div class="economy-total">≈ <span id="economyTotal">0</span> ₽ за весь срок кредита</div>
         </div>
 
         <div class="disclaimer">
-            <strong>Расчёт ориентировочный</strong>, при аннуитетных платежах и указанном сроке кредита. Точную ставку, взнос и
+            <strong>Расчёт ориентировочный</strong> при аннуитетных платежах. Точную ставку и сумму определяет банк индивидуально по заявке.
+        </div>
+
+        <div class="footer">Дмитрий Ермаков | Недвижимость</div>
+    </div>
+
+    <script>
+        const costInput = document.getElementById('cost');
+        const termInput = document.getElementById('term');
+        
+        const costDisplay = document.getElementById('costDisplay');
+        const termDisplay = document.getElementById('termDisplay');
+        const familyPayment = document.getElementById('familyPayment');
+        const standardPayment = document.getElementById('standardPayment');
+        const economy = document.getElementById('economy');
+        const economyTotal = document.getElementById('economyTotal');
+
+        function formatNumber(num) {
+            return Math.round(num).toLocaleString('ru-RU');
+        }
+
+        function calculatePayment(principal, rate, years) {
+            if (principal <= 0 || years <= 0) return 0;
+            const monthlyRate = rate / 12 / 100;
+            const months = years * 12;
+            if (monthlyRate === 0) return principal / months;
+            return principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+        }
+
+        function update() {
+            const cost = parseFloat(costInput.value);
+            const term = parseFloat(termInput.value);
+
+            costDisplay.textContent = (cost / 1000000).toFixed(1);
+            termDisplay.textContent = term;
+
+            // Семейная ипотека: 6%, взнос 0%
+            const familyLoan = cost * 1;
+            const familyMonthly = calculatePayment(familyLoan, 6, term);
+
+            // Стандартная ипотека: 10.5%, взнос 20%
+            const standardLoan = cost * 0.8;
+            const standardMonthly = calculatePayment(standardLoan, 10.5, term);
+
+            // Расчёт экономии
+            const monthlyEconomy = standardMonthly - familyMonthly;
+            const totalEconomy = monthlyEconomy * term * 12;
+
+            familyPayment.textContent = formatNumber(familyMonthly);
+            standardPayment.textContent = formatNumber(standardMonthly);
+            economy.textContent = formatNumber(monthlyEconomy);
+            economyTotal.textContent = formatNumber(totalEconomy);
+        }
+
+        costInput.addEventListener('input', update);
+        termInput.addEventListener('input', update);
+
+        update();
+    </script>
+</body>
+</html>
